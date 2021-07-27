@@ -79,6 +79,7 @@ namespace Foundation.Experiments.Core.Impl
                 else
                     userAttributes.Add(DefaultKeys.UserLoggedIn, false);
 
+                httpContext.Items.Add("$opt_user_agent", httpContext.Request.UserAgent);
                 httpContext.Items.Add("ExperimentationUserData-" + includeVisitorGroups.ToString(), userAttributes);
                 return userAttributes;
             }
