@@ -13,7 +13,7 @@
     <PackageReference Include="EPiServer.Commerce.Core" Version="13.31.0" />
     <PackageReference Include="EPiServer.Tracking.Core" Version="1.19.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="Optimizely.SDK" Version="3.6.0" />
+    <PackageReference Include="Optimizely.SDK" Version="3.9.1" />
     <PackageReference Include="RestSharp" Version="106.2.2" />
   </ItemGroup>
   <ItemGroup>
