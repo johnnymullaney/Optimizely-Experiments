@@ -2,6 +2,7 @@
 {
     public class DefaultKeys
     {
+        public const string DefaultChannel = "Web";
         public const string CookieName = "epiOptimization";
         public const string VisitorGroup = "VisitorGroup";
         public const string UserRoles = "UserRole";
