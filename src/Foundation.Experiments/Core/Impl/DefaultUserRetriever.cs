@@ -42,6 +42,15 @@ namespace Foundation.Experiments.Core.Impl
             }
         }
 
+        public virtual User GetUser(HttpContextBase httpContext)
+        {
+            return new User()
+            {
+                UserId = GetUserId(httpContext),
+                UserAttributes = GetUserAttributes(httpContext)
+            };
+        }
+
         public virtual UserAttributes GetUserAttributes(HttpContextBase httpContext)
         {
             return GetUserAttributes(httpContext, true);
