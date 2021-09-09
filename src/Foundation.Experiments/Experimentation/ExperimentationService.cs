@@ -23,6 +23,21 @@ namespace Foundation.Experiments.Experimentation
             _logger = epiErrorLogger;
         }
 
+        public bool IsFeatureEnabled(HttpContextBase httpContext, string featureKey)
+        {
+            try
+            {
+                var userContext = GetOptimizelyUserContext(httpContext);
+
+                return _experimentationFactory.Instance.IsFeatureEnabled(featureKey, userContext.GetUserId());
+            }
+            catch (Exception e)
+            {
+                _logger?.Log(Level.Error, $"Error thrown on Decide of Optimzely Experiment key: {featureKey}", e);
+                return false;
+            }
+        }
+
         public OptimizelyDecision Decide(HttpContextBase httpContext, string key)
         {
             try
