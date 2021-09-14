@@ -24,6 +24,11 @@ namespace Foundation.Experiments.Core.Init
 
             var client = ServiceLocator.Current.GetInstance<IExperimentationClient>();
             client.CreateOrUpdateAttribute(DefaultKeys.VisitorGroup, "Matches the visitor against Episerver visitor groups");
+            client.CreateOrUpdateAttribute(DefaultKeys.LanguageCode, "Matches the language code the user is on");
+            client.CreateOrUpdateAttribute(DefaultKeys.MarketId, "Matches the market Id against the user");
+            client.CreateOrUpdateAttribute(DefaultKeys.UserLoggedIn, "Matches is a user is logged in");
+            client.CreateOrUpdateAttribute(DefaultKeys.UserAgent, "Enables bot filtering");
+            client.CreateOrUpdateAttribute(DefaultKeys.IsMobileDevice, "Matches if the user is on a mobile device");
         }
 
         private void SyncEventsToOptimizely()

@@ -7,6 +7,15 @@
         public const string VisitorGroup = "VisitorGroup";
         public const string UserRoles = "UserRole";
         public const string UserLoggedIn = "UserLoggedIn";
+        public const string MarketId = "MarketId";
+        public const string LanguageCode = "LanguageCode";
+        public const string IsMobileDevice = "IsMobileDevice";
+
+        /*
+         * Passing user agent to enable bot filtering
+         * https://docs.developers.optimizely.com/full-stack/docs/manage-bot-filtering
+         */
+        public const string UserAgent = "$opt_user_agent";
 
         // Event  tags
         public const string Items = "Products in the basket/purchase order";

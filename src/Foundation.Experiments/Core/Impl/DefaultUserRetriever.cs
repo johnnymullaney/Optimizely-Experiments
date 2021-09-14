@@ -5,6 +5,7 @@ using EPiServer.Personalization.VisitorGroups;
 using EPiServer.Shell.Security;
 using Foundation.Experiments.Core.Config;
 using Foundation.Experiments.Core.Interfaces;
+using Mediachase.Commerce;
 using OptimizelySDK.Entity;
 
 namespace Foundation.Experiments.Core.Impl
@@ -16,15 +17,17 @@ namespace Foundation.Experiments.Core.Impl
         private readonly Lazy<IVisitorGroupRoleRepository> _visitorGroupRoleRepository;
         private readonly object _padlock = new object();
         private readonly object _vgPadlock = new object();
+        private readonly ICurrentMarket _currentMarket;
 
         public DefaultUserRetriever(
             Lazy<UIRoleProvider> roleProvider,
             Lazy<IVisitorGroupRepository> visitorGroupRepository,
-            Lazy<IVisitorGroupRoleRepository> visitorGroupRoleRepository)
+            Lazy<IVisitorGroupRoleRepository> visitorGroupRoleRepository, ICurrentMarket currentMarket)
         {
             _roleProvider = roleProvider;
             _visitorGroupRepository = visitorGroupRepository;
             _visitorGroupRoleRepository = visitorGroupRoleRepository;
+            _currentMarket = currentMarket;
         }
 
         public virtual string GetUserId(HttpContextBase httpContext)
@@ -83,12 +86,18 @@ namespace Foundation.Experiments.Core.Impl
                     };
                 }
 
+                // add market and language
+                userAttributes.Add(DefaultKeys.LanguageCode, EPiServer.Globalization.GlobalizationSettings.UICultureLanguageCode);
+                userAttributes.Add(DefaultKeys.MarketId, _currentMarket.GetCurrentMarket().MarketId);
+
                 if (httpContext?.User?.Identity != null)
                     userAttributes.Add(DefaultKeys.UserLoggedIn, httpContext.User.Identity.IsAuthenticated);
                 else
                     userAttributes.Add(DefaultKeys.UserLoggedIn, false);
 
-                httpContext.Items.Add("$opt_user_agent", httpContext.Request.UserAgent);
+                userAttributes.Add(DefaultKeys.UserAgent, httpContext.Request.UserAgent);
+                userAttributes.Add(DefaultKeys.IsMobileDevice, httpContext.Request.Browser.IsMobileDevice);
+
                 httpContext.Items.Add("ExperimentationUserData-" + includeVisitorGroups.ToString(), userAttributes);
                 return userAttributes;
             }
